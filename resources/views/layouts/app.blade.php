@@ -34,11 +34,11 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
+                        <a class="nav-link" href="/">Home</a>
                     </li>
                      
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Blogs</a>
+                        <a class="nav-link" href="/post">Blogs</a>
                     </li>   
                 </ul>
                 <!-- Right Side Of Navbar -->
@@ -85,6 +85,12 @@
                                     {{ __('Logout') }} &nbsp; <i class="fa fa-sign-out"></i>
                                 </a>
 
+                                <hr class="hr-1">
+
+                                <a class="dropdown-item" href="/home">
+                                    {{ __('Dashboard') }} &nbsp; <i class="fa fa-dashboard"></i>
+                                </a>
+                                
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
                                 </form>
@@ -99,5 +105,10 @@
             @yield('content')
         </main>
     </div>
+
+    {{-- <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace( 'article-ckeditor' );
+    </script> --}}
 </body>
 </html>

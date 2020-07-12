@@ -95,3 +95,28 @@ a {
     font-weight: 900;
     font-size: 23px;
 }
+
+
+.ml-10 {
+  margin-left: 10%;
+}
+.mr-10 {
+  margin-right: 10%;
+}
+
+.my-10 {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.mt-10 {
+  margin-top: 10%;
+}
+.mb-10 {
+  margin-bottom: 10%;
+}
+
+.mx-10 {
+  margin-top: 10%;
+  margin-bottom: 10%;
+}

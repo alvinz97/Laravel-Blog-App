@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+// Route::get('/', function () {
+//     return view('index');
+// });
 
 Auth::routes();
 
@@ -33,3 +33,7 @@ Route::get('/upload', function () {
 Route::get('/lock', function () {
     return view('auth.lock');
 });
+
+
+Route::resource('/', 'PostsController');
+Route::resource('/post', 'PostsController');
