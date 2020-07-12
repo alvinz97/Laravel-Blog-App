@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
@@ -52,12 +53,25 @@ class PostsController extends Controller
             'body' => 'required',
             'meta' => 'required',
             'metaKeys' => 'required',
+            'image_source' => 'image|nullable|max:1999'
         ]);
+
+        // File upload 
+        if ($request->hasFile('image_source')) {
+            $fullName = $request->file('image_source')->getClientOriginalName();
+            $fileName = pathinfo($fullName, PATHINFO_FILENAME);
+            $extention = $request->file('image_source')->getClientOriginalExtension();
+            $fileNameToStrore = $fileName . '_' . time() . '.' . $extention;
+            $path = $request->file('image_source')->storeAs('public/blog_images', $fileNameToStrore);
+        } else {
+            $fileNameToStrore = 'cover.jpg';
+        }
 
         $post = new Post;
         $post->user_id = auth()->user()->id;
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        $post->image_url = $fileNameToStrore;
         $post->meta = $request->input('meta');
         $post->meta_keys = $request->input('metaKeys');
         $post->save();
@@ -89,6 +103,11 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
+
+        // Check if correct user land on the page 
+        if (auth()->user()->id !== $post->user_id) {
+            return redirect('/post');
+        }
         return view('posts.edit')->with('post', $post);
     }
 
@@ -106,11 +125,26 @@ class PostsController extends Controller
             'body' => 'required',
             'meta' => 'required',
             'metaKeys' => 'required',
+            'image_source' => 'image|nullable|max:1999'
         ]);
+
+        // File upload 
+        if ($request->hasFile('image_source')) {
+            $fullName = $request->file('image_source')->getClientOriginalName();
+            $fileName = pathinfo($fullName, PATHINFO_FILENAME);
+            $extention = $request->file('image_source')->getClientOriginalExtension();
+            $fileNameToStrore = $fileName . '_' . time() . '.' . $extention;
+            $path = $request->file('image_source')->storeAs('public/blog_images', $fileNameToStrore);
+        }
 
         $post = Post::find($id);
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+
+        if ($request->hasFile('image_source')) {
+            $post->image_url = $fileNameToStrore;
+        }
+
         $post->meta = $request->input('meta');
         $post->meta_keys = $request->input('metaKeys');
         $post->save();
@@ -127,6 +161,16 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+
+        // Check if correct user land on the page 
+        if (auth()->user()->id !== $post->user_id) {
+            return redirect('/post');
+        }
+
+        if ($post->image_url != 'cover.jpg') {
+            Storage::delete('public/blog_images/' . $post->image_url);
+        }
+
         $post->delete();
 
         return redirect('/post');

@@ -7,7 +7,7 @@
         <h1>Create Post</h1>
 
         <div class="custom-card text-left p-3">
-            {!! Form::open(['action' => 'PostsController@store', 'method' => 'POST']) !!}
+            {!! Form::open(['action' => 'PostsController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                 <div class="row">
                     <div class="form-group col-lg-12">
                         {{Form::label('title', 'Title')}}
@@ -33,6 +33,12 @@
                     <div class="form-group col-lg-12">
                         {{Form::label('body', 'Body')}}
                         {{Form::textarea('body', '', ['id' => 'article-ckeditor','class' => 'form-control'])}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        {{Form::file('image_source')}}
                     </div>
                 </div>
 

@@ -12,24 +12,22 @@
                 @foreach ($posts as $post)
                     <div class="row">
                         <div class="col-lg-8">
-
+                            <img src="/storage/blog_images/{{$post->image_url}}" alt="{{$post->title}}" class="img-fluid">
                         </div>
                         <div class="col-lg-4 text-left">
                             <h3><a href="/post/{{$post->id}}"> {!! $post->title !!} </a></h3>
 
+                             <p>{!! Str::substr($post->body, 0, 550) !!}</p>
+
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="text-left">
+                                <div class="col-lg-6 text-left">
                                     <a href="post/{{$post->id}}/edit" class="btn btn-sm btn-dark">Edit</a>
                                 </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="text-right">
-                                        {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' =>'POST']) !!}
-                                            {!! Form::hidden('_method', 'DELETE') !!}
-                                            {!! Form::submit('Delete', ['class' => 'btn btn-sm btn-warning']) !!}
-                                        {!! Form::close() !!}
-                                    </div>
+                                <div class="col-lg-6 text-right">
+                                    {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' =>'POST']) !!}
+                                        {!! Form::hidden('_method', 'DELETE') !!}
+                                        {!! Form::submit('Delete', ['class' => 'btn btn-sm btn-warning']) !!}
+                                    {!! Form::close() !!}
                                 </div>
                             </div>
                         </div>

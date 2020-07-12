@@ -7,7 +7,7 @@
 
         <div class="custom-card p-3">
             <div class="image-container">
-                <img src="" alt="">
+                <img src="/storage/blog_images/{{$post->image_url}}" alt="{{$post->title}}" class="img-fluid">
             </div>
 
             <div class="post-container text-left">
@@ -17,21 +17,25 @@
 
                 <p class="mt-2 text-left"><small>Written on {{$post->created_at}} by <i><strong>{{ $post->user->name }}</strong></i></small></p>
             </div>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="text-left">
-                       <a href="{{$post->id}}/edit" class="btn btn-sm btn-dark">Edit</a>
-                   </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="text-right">
-                        {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' =>'POST']) !!}
-                            {!! Form::hidden('_method', 'DELETE') !!}
-                            {!! Form::submit('Delete', ['class' => 'btn btn-sm btn-warning']) !!}
-                        {!! Form::close() !!}
+            @if (!Auth::guest())
+                @if (Auth::user()->id == $post->user_id)
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="text-left">
+                            <a href="{{$post->id}}/edit" class="btn btn-sm btn-dark">Edit</a>
+                        </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="text-right">
+                                {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' =>'POST']) !!}
+                                    {!! Form::hidden('_method', 'DELETE') !!}
+                                    {!! Form::submit('Delete', ['class' => 'btn btn-sm btn-warning']) !!}
+                                {!! Form::close() !!}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                @endif
+            @endif
         </div>
 
         
