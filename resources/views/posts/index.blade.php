@@ -14,7 +14,7 @@
                     <div class="col-lg-4">
                         <h2><a href="/post/{{$post->id}}"> {!! $post->title !!} </a></h2>
 
-                        <p>{!! Str::substr($post->body, 0, 500) !!}</p>
+                        <p>{!! Str::substr($post->body, 0, 450) !!}</p>
 
                         <div class="text-center my-2">
                             <a href="/post/{{$post->id}}" class="btn btn-sm btn-custom">Read More</a>
